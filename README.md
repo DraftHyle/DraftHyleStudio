@@ -39,7 +39,7 @@ If you are searching for **3D printed miniatures**, **custom 3D printed keychain
 - **Made for phones.** Responsive layout, touch friendly, and respects reduced-motion settings.
 - **A little anime.** Kunai cursor, falling petals, slash effects and chunky layered type.
 
-## 🖼️ Preview
+<!-- ## 🖼️ Preview
 
 > Add screenshots here. Create a folder called `screenshots/` and drop in images:
 >
@@ -52,18 +52,18 @@ If you are searching for **3D printed miniatures**, **custom 3D printed keychain
 ├── index.html      # The whole site: HTML, CSS and JavaScript
 ├── photos/         # Photos of our work
 └── README.md
-```
-
+``` -->
+<!-- 
 ## 🚀 Run it locally
 
 The 3D gallery loads photos as textures, and browsers block that when you open the file by double-clicking it. Use a small local server instead:
 
 ```bash
 # from the project folder
-python -m http.server 8000
-```
+python -m http.server 8000 -->
 
-Then open **http://localhost:8000**.
+
+<!-- Then open **http://localhost:8000**.
 
 ## 🌐 Deploy on GitHub Pages
 
@@ -72,7 +72,7 @@ Then open **http://localhost:8000**.
 3. Under **Build and deployment**, choose **Deploy from a branch**, select `main` and `/ (root)`, then **Save**.
 4. After a minute or two the site is live at `https://YOUR-USERNAME.github.io/YOUR-REPO/`.
 
-Use simple photo names (letters, numbers and hyphens) and keep upper and lower case consistent, since GitHub Pages treats them as different.
+Use simple photo names (letters, numbers and hyphens) and keep upper and lower case consistent, since GitHub Pages treats them as different. -->
 
 ## 🛠️ Built with
 
