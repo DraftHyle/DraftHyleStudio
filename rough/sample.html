@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forma 3D Studio</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      background: #100d0c;
+      color: #fff;
+      font-family: Inter, sans-serif;
+      min-height: 100vh;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .screen {
+      display: none;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    .back {
+      position: absolute;
+      top: 25px;
+      left: 35px;
+      color: #aaa;
+      background: none;
+      border: 0;
+      font-size: 14px;
+      z-index: 5;
+    }
+
+    .back:hover {
+      color: white;
+    }
+
+    h1 {
+      font-size: clamp(28px, 4vw, 43px);
+      letter-spacing: -1.7px;
+      margin: 0;
+    }
+
+    .subtitle {
+      color: #888;
+      margin-top: 12px;
+      font-size: 16px;
+    }
+
+    /* ONBOARDING */
+
+    #onboarding {
+      flex-direction: column;
+      align-items: center;
+      padding: 105px 25px 45px;
+      background:
+        radial-gradient(ellipse at 50% 50%, #382016 0%, #170f0c 45%, #100d0c 75%);
+    }
+
+    .heading {
+      text-align: center;
+      z-index: 2;
+    }
+
+    .categories {
+      width: min(900px, 100%);
+      margin: 60px auto 30px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .category {
+      min-height: 185px;
+      position: relative;
+      border: 1px solid #38302c;
+      background: linear-gradient(145deg, #28201c, #181513);
+      border-radius: 18px;
+      padding: 17px;
+      transition: .25s;
+      overflow: hidden;
+    }
+
+    .category:hover {
+      transform: translateY(-5px);
+      border-color: #c18b61;
+    }
+
+    .category.selected {
+      border: 2px solid #e4b17e;
+      background: linear-gradient(145deg, #463022, #241912);
+    }
+
+    .art {
+      height: 115px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 75px;
+      filter: drop-shadow(0 15px 15px #0009);
+    }
+
+    .category-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 7px;
+    }
+
+    .check {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      border: 1px solid #777;
+      width: 19px;
+      height: 19px;
+      border-radius: 50%;
+    }
+
+    .category.selected .check {
+      background: #e9b27e;
+      border-color: #e9b27e;
+    }
+
+    .category.selected .check:after {
+      content: "✓";
+      display: block;
+      color: #20140d;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .next {
+      background: #e8b17e;
+      color: #24160f;
+      border: 0;
+      border-radius: 30px;
+      padding: 15px 65px;
+      font-weight: 700;
+    }
+
+    .next:disabled {
+      opacity: .3;
+      cursor: not-allowed;
+    }
+
+    /* UPLOAD */
+
+    #uploadScreen {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      background: radial-gradient(circle at center, #342018, #100d0c 65%);
+    }
+
+    .upload-box {
+      width: min(580px, 100%);
+      border: 1px dashed #86664e;
+      background: #211a16;
+      border-radius: 24px;
+      padding: 55px 25px;
+      text-align: center;
+      margin: 35px 0 20px;
+      transition: .2s;
+    }
+
+    .upload-box.drag {
+      border-color: #e8b17e;
+      background: #39291e;
+    }
+
+    .upload-icon {
+      font-size: 55px;
+      margin-bottom: 18px;
+    }
+
+    .upload-box p {
+      color: #999;
+      font-size: 14px;
+    }
+
+    #preview {
+      max-width: 100%;
+      max-height: 180px;
+      display: none;
+      margin: 20px auto;
+      border-radius: 12px;
+    }
+
+    .upload-button {
+      background: #e8b17e;
+      border: 0;
+      color: #21150e;
+      border-radius: 12px;
+      padding: 13px 25px;
+      font-weight: 700;
+    }
+
+    #generate {
+      margin-top: 20px;
+      width: min(580px, 100%);
+    }
+
+    #generate:disabled {
+      opacity: .35;
+    }
+
+    /* GENERATING */
+
+    #generating {
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background:
+        radial-gradient(circle at center, #292929, #171717 65%, #111);
+    }
+
+    #particles {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .generate-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .generate-content h2 {
+      font-size: 30px;
+      margin: 0 0 12px;
+    }
+
+    .generate-content p {
+      color: #999;
+      font-size: 14px;
+    }
+
+    .progress {
+      width: min(320px, 75vw);
+      height: 5px;
+      background: #444;
+      margin: 30px auto 12px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #e8b17e;
+      transition: width .5s;
+    }
+
+    .cancel {
+      pointer-events: auto;
+      margin-top: 25px;
+      background: transparent;
+      color: #aaa;
+      border: 1px solid #555;
+      border-radius: 20px;
+      padding: 10px 25px;
+    }
+
+    /* WORKSPACE */
+
+    #workspace {
+      flex-direction: column;
+      background: #12141b;
+    }
+
+    .workspace-header {
+      height: 65px;
+      background: #1b1d26;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 25px;
+      border-bottom: 1px solid #333;
+    }
+
+    .workspace-main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      min-height: calc(100vh - 65px);
+    }
+
+    .workspace-side {
+      background: #1b1d26;
+      padding: 20px;
+    }
+
+    .workspace-view {
+      min-height: 500px;
+      display: grid;
+      place-items: center;
+      color: #aaa;
+      text-align: center;
+    }
+
+    .workspace-view p {
+      line-height: 1.8;
+    }
+
+    @media(max-width:700px) {
+      .categories {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .category {
+        min-height: 145px;
+      }
+
+      .art {
+        height: 80px;
+        font-size: 55px;
+      }
+
+      .workspace-main {
+        grid-template-columns: 1fr;
+      }
+
+      .workspace-side {
+        order: 2;
+      }
+
+      #onboarding {
+        padding-top: 90px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SCREEN 1: ONBOARDING -->
+
+  <section class="screen active" id="onboarding">
+
+    <button class="back">← Back</button>
+
+    <div class="heading">
+      <h1>What would you love to create?</h1>
+      <div class="subtitle">
+        Choose your creative world. We'll personalize your studio.
+      </div>
+    </div>
+
+    <div class="categories">
+
+      <div class="category" data-category="Furniture">
+        <span class="check"></span>
+        <div class="art">🪑</div>
+        <div class="category-name">Furniture</div>
+      </div>
+
+      <div class="category" data-category="Buildings">
+        <span class="check"></span>
+        <div class="art">🏛️</div>
+        <div class="category-name">Buildings</div>
+      </div>
+
+      <div class="category" data-category="Architecture">
+        <span class="check"></span>
+        <div class="art">🏺</div>
+        <div class="category-name">Architectural Elements</div>
+      </div>
+
+      <div class="category" data-category="Lighting">
+        <span class="check"></span>
+        <div class="art">💡</div>
+        <div class="category-name">Lighting & Decor</div>
+      </div>
+
+      <div class="category" data-category="Characters">
+        <span class="check"></span>
+        <div class="art">🧸</div>
+        <div class="category-name">Characters & Toys</div>
+      </div>
+
+      <div class="category" data-category="Others">
+        <span class="check"></span>
+        <div class="art">✨</div>
+        <div class="category-name">Others</div>
+      </div>
+
+    </div>
+
+    <button class="next" id="next" disabled>Next →</button>
+
+  </section>
+
+  <!-- SCREEN 2: IMAGE UPLOAD -->
+
+  <section class="screen" id="uploadScreen">
+
+    <button class="back" onclick="showScreen('onboarding')">
+      ← Back
+    </button>
+
+    <div class="heading">
+      <h1>Bring your imagination to life.</h1>
+      <div class="subtitle">
+        Upload a 2D image. Let AI transform it into 3D.
+      </div>
+    </div>
+
+    <div class="upload-box" id="dropArea">
+
+      <div class="upload-icon">✧</div>
+
+      <h3>Drop your image here</h3>
+
+      <p>PNG, JPG or WEBP</p>
+
+      <img id="preview" alt="Image preview">
+
+      <input type="file" id="imageInput" accept="image/png,image/jpeg,image/webp" hidden>
+
+      <button class="upload-button" onclick="document.getElementById('imageInput').click()">
+        Browse images
+      </button>
+
+    </div>
+
+    <button class="next" id="generate" disabled>
+      ✨ Generate 3D Model
+    </button>
+
+  </section>
+
+  <!-- SCREEN 3: PARTICLE GENERATION -->
+
+  <section class="screen" id="generating">
+
+    <canvas id="particles"></canvas>
+
+    <div class="generate-content">
+
+      <h2 id="generateTitle">Creating something magical...</h2>
+
+      <p id="generateStatus">
+        Preparing your image for 3D reconstruction
+      </p>
+
+      <div class="progress">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <p id="progressText">Waiting for generation...</p>
+
+      <button class="cancel" onclick="cancelGeneration()">
+        Cancel
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- SCREEN 4: WORKSPACE -->
+
+  <section class="screen" id="workspace">
+
+    <div class="workspace-header">
+      <b>✦ Forma 3D Studio</b>
+      <span>My 3D Creation</span>
+    </div>
+
+    <div class="workspace-main">
+
+      <aside class="workspace-side">
+        <h3>Model tools</h3>
+        <p>Solid View</p>
+        <p>Wireframe</p>
+        <p>Transparent</p>
+        <p>Export GLB</p>
+      </aside>
+
+      <div class="workspace-view">
+        <div>
+          <div style="font-size:55px">🎉</div>
+          <h2>Your model is ready!</h2>
+          <p id="modelMessage">
+            Connect your Three.js viewer here
+            to inspect your generated model.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <script>
+
+    // SCREEN NAVIGATION
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => {
+        s.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+
+    // CATEGORY SELECTION
+
+    let selectedCategory = null;
+
+    document.querySelectorAll('.category').forEach(card => {
+      card.addEventListener('click', () => {
+        card.classList.toggle('selected');
+
+        selectedCategory = card.classList.contains('selected')
+          ? card.dataset.category
+          : null;
+
+        document.getElementById('next').disabled =
+          !selectedCategory;
+      });
+    });
+
+    document.getElementById('next').onclick = () => {
+      showScreen('uploadScreen');
+    };
+
+    // IMAGE UPLOAD
+
+    let selectedFile = null;
+
+    const imageInput = document.getElementById('imageInput');
+    const dropArea = document.getElementById('dropArea');
+
+    function selectImage(file) {
+      if (!file || !file.type.startsWith('image/')) return;
+
+      selectedFile = file;
+
+      const preview = document.getElementById('preview');
+      preview.src = URL.createObjectURL(file);
+      preview.style.display = 'block';
+
+      document.getElementById('generate').disabled = false;
+    }
+
+    imageInput.onchange = e => selectImage(e.target.files[0]);
+
+    dropArea.ondragover = e => {
+      e.preventDefault();
+      dropArea.classList.add('drag');
+    };
+
+    dropArea.ondragleave = () => {
+      dropArea.classList.remove('drag');
+    };
+
+    dropArea.ondrop = e => {
+      e.preventDefault();
+      dropArea.classList.remove('drag');
+      selectImage(e.dataTransfer.files[0]);
+    };
+
+    // GENERATION
+
+    let controller = null;
+
+    document.getElementById('generate').onclick = async () => {
+
+      if (!selectedFile) return;
+
+      showScreen('generating');
+
+      controller = new AbortController();
+
+      const form = new FormData();
+
+      form.append('image', selectedFile);
+      form.append('category', selectedCategory);
+
+      updateProgress(10, 'Uploading your image...');
+
+      try {
+
+        // Connect this route to your AI 3D backend.
+        // Expected response: a GLB file.
+
+        const response = await fetch('/api/generate-3d', {
+          method: 'POST',
+          body: form,
+          signal: controller.signal
+        });
+
+        if (!response.ok) {
+          throw new Error('Generation service unavailable');
+        }
+
+        const modelBlob = await response.blob();
+
+        if (!modelBlob.size) {
+          throw new Error('Empty model received');
+        }
+
+        const modelURL = URL.createObjectURL(modelBlob);
+
+        updateProgress(100, '3D model generated!');
+
+        setTimeout(() => {
+          showScreen('workspace');
+          document.getElementById('modelMessage').textContent =
+            'Your GLB model is ready. Model URL: ' + modelURL;
+        }, 700);
+
+      } catch (error) {
+
+        if (error.name === 'AbortError') return;
+
+        updateProgress(0, 'Generation failed');
+
+        document.getElementById('generateStatus').textContent =
+          'Could not connect to the AI generation service.';
+
+        setTimeout(() => {
+          showScreen('uploadScreen');
+          alert('Please check your AI backend connection.');
+        }, 1500);
+
+      }
+
+    };
+
+    function updateProgress(value, message) {
+      document.getElementById('progressFill').style.width =
+        value + '%';
+
+      document.getElementById('progressText').textContent =
+        value + '%';
+
+      document.getElementById('generateStatus').textContent =
+        message;
+    }
+
+    function cancelGeneration() {
+      if (controller) controller.abort();
+      showScreen('uploadScreen');
+    }
+
+    // PARTICLE ANIMATION
+
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+
+    let particles = [];
+    let animationId;
+
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+
+      canvas.width = rect.width * devicePixelRatio;
+      canvas.height = rect.height * devicePixelRatio;
+
+      ctx.setTransform(
+        devicePixelRatio, 0, 0, devicePixelRatio, 0, 0
+      );
+    }
+
+    function createParticles() {
+
+      particles = [];
+
+      const count = 1500;
+
+      for (let i = 0; i < count; i++) {
+
+        const angle = Math.random() * Math.PI * 2;
+        const v = Math.random() * Math.PI;
+
+        const radius = 90 + Math.random() * 85;
+
+        particles.push({
+          angle,
+          v,
+          radius,
+          speed: 0.001 + Math.random() * 0.003,
+          size: Math.random() * 1.8 + 0.3,
+          phase: Math.random() * Math.PI * 2
+        });
+
+      }
+
+    }
+
+    function animateParticles() {
+
+      animationId = requestAnimationFrame(animateParticles);
+
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+
+      ctx.clearRect(0, 0, w, h);
+
+      const cx = w / 2;
+      const cy = h / 2;
+
+      const time = performance.now() * 0.001;
+
+      particles.forEach(p => {
+
+        p.angle += p.speed;
+
+        const wave = Math.sin(time * 1.5 + p.phase) * 9;
+
+        const r = p.radius + wave;
+
+        const x = cx + r * Math.sin(p.v) * Math.cos(p.angle);
+        const y = cy + r * Math.sin(p.v) * Math.sin(p.angle);
+
+        const alpha = 0.25 + 0.65 *
+          (0.5 + 0.5 * Math.sin(time + p.phase));
+
+        ctx.beginPath();
+
+        ctx.arc(x, y, p.size, 0, Math.PI * 2);
+
+        ctx.fillStyle =
+          `rgba(240,225,210,${alpha})`;
+
+        ctx.fill();
+
+      });
+
+    }
+
+    const observer = new MutationObserver(() => {
+
+      if (document.getElementById('generating')
+        .classList.contains('active')) {
+
+        resizeCanvas();
+        createParticles();
+        cancelAnimationFrame(animationId);
+        animateParticles();
+
+      } else {
+
+        cancelAnimationFrame(animationId);
+
+      }
+
+    });
+
+    observer.observe(document.body, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    window.addEventListener('resize', resizeCanvas);
+
+  </script>
+
+</body>
+
+</html>
