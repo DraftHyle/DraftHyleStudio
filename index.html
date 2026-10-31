@@ -4,12 +4,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="description"
-        content="Discover Drafthyle's custom 3D-printed keychains, hand-painted toys and miniatures, and personalized gifts for teams, kids, and couples. Made by hand in small batches.">
-    <meta property="og:title" content="Drafthyle – 3D printed & hand-painted keepsakes">
+        content="Order custom 3D-printed name keychains, corporate gifts, hand-painted miniatures and personalized toys from Drafthyle. Preview your design in 3D before printing.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Custom 3D-Printed Keychains &amp; Gifts | Drafthyle">
     <meta property="og:description"
-        content="Explore custom 3D-printed keychains, hand-painted toys and miniatures, and personalized gifts made by Drafthyle.">
+        content="Custom 3D-printed name keychains, corporate gifts and hand-painted miniatures, made by hand. Request an order and preview your design in 3D.">
+    <meta name="twitter:card" content="summary">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>Drafthyle – 3D printed & hand-painted keepsakes</title>
+    <title>Custom 3D-Printed Keychains &amp; Gifts | Drafthyle</title>
     <link rel="icon" type="image/png" href="photos/logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
@@ -188,6 +190,14 @@
             text-shadow: 4px 4px 0 #ff4f9a, 8px 8px 0 #29e0ff, 12px 12px 0 #ffd23f;
             transform-style: preserve-3d;
             transition: transform .15s
+        }
+
+        .hero h1 .hero-keyword {
+            display: block;
+            margin-top: 24px;
+            font: 800 clamp(16px, 2vw, 22px)/1.3 Outfit, system-ui, sans-serif;
+            letter-spacing: 0;
+            text-shadow: none
         }
 
         .hero p.l {
@@ -1520,9 +1530,9 @@
     <header class="hero">
         <div>
             <span class="cur">made by hand, with love</span>
-            <h1 id="ttl">Draft<br>hyle</h1>
-            <p class="l">3D printed keychains, hand-painted figures and gifts with your names on them. Walk through our
-                work in 3D below.</p>
+            <h1 id="ttl">Draft<br>hyle<span class="hero-keyword">Custom 3D-Printed Keychains &amp; Gifts</span></h1>
+            <p class="l">Personalized 3D-printed name keychains, corporate gifts, hand-painted figures and miniatures.
+                Approve a 3D preview before we print your custom order.</p>
             <div class="hero-actions"><a class="btn" href="#make">What we make</a><a class="btn o" href="#lab">3D
                     lab</a></div>
         </div>
@@ -1548,12 +1558,13 @@
             note.</span></div>
 
     <section id="make">
-        <h2>What we make</h2>
-        <p class="sub">Three kinds of work, one workshop. Everything is printed, finished and packed by hand.</p>
+        <h2>Custom 3D-Printed Products &amp; Gifts</h2>
+        <p class="sub">From custom name keychains to hand-painted miniatures, every piece is printed, finished and
+            packed by hand.</p>
         <div class="grid">
             <div class="card tilt"><span class="em">🎁</span>
-                <h3>Corporate keychains</h3>
-                <p>One keychain per teammate for project wins, onboarding and festivals.</p>
+                <h3>Custom Corporate Keychains</h3>
+                <p>Personalized 3D-printed keychains for teammates, onboarding, project wins and festivals.</p>
                 <ul>
                     <li>Printed with logo and name</li>
                     <li>Sealed in an envelope</li>
@@ -1561,8 +1572,8 @@
                 </ul>
             </div>
             <div class="card tilt" style="--c:var(--cy)"><span class="em">🎨</span>
-                <h3>Painted &amp; sprayed</h3>
-                <p>We paint what you love, from toys to tiny worlds.</p>
+                <h3>Hand-Painted Miniatures &amp; Toys</h3>
+                <p>3D-printed miniatures, toys and figures, spray-painted or finished by hand.</p>
                 <ul>
                     <li>Spray painted toys</li>
                     <li>Miniatures</li>
@@ -1571,8 +1582,8 @@
                 </ul>
             </div>
             <div class="card tilt" style="--c:var(--yl)"><span class="em">💌</span>
-                <h3>Names &amp; gifts</h3>
-                <p>Personal gifts with the names on them.</p>
+                <h3>Personalized 3D-Printed Gifts</h3>
+                <p>Custom name gifts for kids and couples, made for birthdays and anniversaries.</p>
                 <ul>
                     <li>Gifts for kids</li>
                     <li>Couple sets with both names</li>
@@ -1667,8 +1678,9 @@
         </details>
     </section>
     <section id="order">
-        <h2>Order</h2>
-        <p class="sub">Tell us what you have in mind. Your order request will be sent securely through Google Forms.</p>
+        <h2>Request a Custom 3D-Printed Order</h2>
+        <p class="sub">Tell us what you would like made, including names, quantity, colours, deadline and contact details.
+            We will review your request and share a 3D preview before printing. Your request is sent through Google Forms.</p>
         <form id="f"
             action="https://docs.google.com/forms/d/e/1FAIpQLScUt5CO_hSCgXEL5hLJQ268vaLmxdHLnPvMnCbZod8MKnKXsg/formResponse"
             method="post" target="google-form-response">
