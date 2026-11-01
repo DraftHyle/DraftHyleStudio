@@ -1622,7 +1622,7 @@
             <div class="cv" id="v3" tabindex="0" aria-label="3D gallery. Use the left and right arrow keys to move.">
             </div>
             <div class="ctl cap">
-                <div><small id="gc">1 / 9</small><b id="gt"></b></div>
+                <div><small id="gc">1 / 14</small><b id="gt"></b></div>
                 <div><button class="s" id="gp" aria-label="Previous piece">←</button> <button class="s" id="gn"
                         aria-label="Next piece">→</button> <button class="s" id="go">Look closer</button></div>
             </div>
@@ -1743,7 +1743,7 @@
         document.addEventListener('click', e => { if (!nav.contains(e.target)) setNavOpen(false) });
         addEventListener('keydown', e => { if (e.key === 'Escape') setNavOpen(false) });
         const RM = matchMedia('(prefers-reduced-motion:reduce)').matches;
-        const COL = [['#d6c1a5', 'Beige'], ['#ff69b4', 'Pink'], ['#21163f', 'Ink'], ['#858990', 'Grey'], ['#fff7fb', 'White'], ['#29e0ff', 'Cyan'], ['#ff7a29', 'Orange'], ['#ffd23f', 'Yellow'], ['#8a5cff', 'Purple']];
+        const COL = [['#d6c1a5', 'Beige'], ['#ff69b4', 'Pink'], ['#858990', 'Grey'], ['#fff7fb', 'White'], ['#29e0ff', 'Cyan'], ['#1ABC83', 'Sea Green']];
         function sw(el, fn, d = 0) { COL.forEach(([c, name], i) => { const b = document.createElement('button'); b.className = 'sw'; b.style.background = c; b.setAttribute('aria-label', name + ' keychain'); b.title = name; b.setAttribute('aria-pressed', i == d); b.onclick = () => { el.querySelectorAll('.sw').forEach(x => x.setAttribute('aria-pressed', false)); b.setAttribute('aria-pressed', true); fn(c, name) }; el.appendChild(b) }) }
         function mk(el, build) {
             let r; try { r = new THREE.WebGLRenderer({ antialias: true, alpha: true }) } catch (e) { el.innerHTML = '<p style="padding:24px">Your browser could not start the 3D view.</p>'; return {} } r.setPixelRatio(Math.min(devicePixelRatio, 2)); el.appendChild(r.domElement);
@@ -1831,7 +1831,25 @@
         IMG.p10 = 'photos/corporate.jpg';
         IMG.p11 = 'photos/pink.jpg';
         IMG.p9 = 'photos/akash.jpg';
-        const IT = [['p9', 'AK# name keychain', 'Keychains', 'A white cut-out name keychain in a bubbly font, shaped around the letters.'], ['p5', 'Proposal sculpture', 'Gifts & games', 'A bronze-finish couple scene with their names painted on the base.'], ['p0', 'Golden Ganesha', 'Figures', 'A printed Ganesha, hand-painted in gold.'], ['p1', 'Name keychain', 'Keychains', 'A custom name, printed and fitted with a ring.'], ['p3', 'Articulated creature', 'Articulated', 'A jointed body that moves in your hand.'], ['p6', 'Bronze articulated keychain', 'Articulated', 'Bronze finish with jointed legs.'], ['p2', 'Cat keychain', 'Keychains', 'A tiny printed cat that travels on your keys.'], ['p4', 'Spiral hexagon keychain', 'Keychains', 'Layered hexagon with a keyring.'], ['p8', 'Pocket tic-tac-toe', 'Gifts & games', 'A printed board with X and O pieces.'], ['p7', 'Our first Ganesha', 'Figures', 'Where it started: our first 3D printed Ganesha.'], ['p11', 'Pocket tic-tac-toe', 'Gifts & games', 'A printed board with X and O pieces with X painted in Pink.'],];
+        IMG.shark = 'photos/articulated%20shark.jpg';
+        IMG.naruto3 = 'photos/naruto3.jpg';
+        IMG.wand = 'photos/magic%20wand.jpg';
+        const IT = [
+            ['p9', 'AK# name keychain', 'Keychains', 'A white cut-out name keychain in a bubbly font, shaped around the letters.'],
+            ['p5', 'Proposal sculpture', 'Gifts & games', 'A bronze-finish couple scene with their names painted on the base.'],
+            ['p0', 'Golden Ganesha', 'Figures', 'A printed Ganesha, hand-painted in gold.'],
+            ['p1', 'Name keychain', 'Keychains', 'A custom name, printed and fitted with a ring.'],
+            ['p3', 'Articulated creature', 'Articulated', 'A jointed body that moves in your hand.'],
+            ['p6', 'Bronze articulated keychain', 'Articulated', 'Bronze finish with jointed legs.'],
+            ['p2', 'Cat keychain', 'Keychains', 'A tiny printed cat that travels on your keys.'],
+            ['p4', 'Spiral hexagon keychain', 'Keychains', 'Layered hexagon with a keyring.'],
+            ['p8', 'Pocket tic-tac-toe', 'Gifts & games', 'A printed board with X and O pieces.'],
+            ['p7', 'Our first Ganesha', 'Figures', 'Where it started: our first 3D printed Ganesha.'],
+            ['p11', 'Pink pocket tic-tac-toe', 'Gifts & games', 'A printed board with X and O pieces, with X painted pink.'],
+            ['shark', 'Articulated Shark Keychain', 'Articulated', 'A flexible 3D-printed shark keychain, shown in pink and white.'],
+            ['naruto3', 'Naruto-Inspired Figure Keychain', 'Keychains', 'A small 3D-printed character keepsake with a key ring.'],
+            ['wand', 'Magic Wand', 'Gifts & games', 'A pair of 3D-printed star wands in pastel colors.']
+        ];
         document.querySelectorAll('.card').forEach((c, i) => { const m = new Image(); m.src = IMG[['p1', 'p0', 'p5'][i]]; m.alt = ''; m.className = 'cimg'; c.prepend(m) });
         const lb = document.getElementById('lb'); let li = 0;
         function showLB(t) { lbi.src = IMG[t[0]]; lbi.alt = t[1]; lbt.textContent = t[1]; lbc.textContent = t[2]; lbd.textContent = t[3]; lb.classList.add('on'); lbq.focus() }
